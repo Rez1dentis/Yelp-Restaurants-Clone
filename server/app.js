@@ -7,7 +7,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const bcrypt = require('bcrypt');
 const {
-  Users, Posts, Sequelize,
+  Users, Restoraunt, Sequelize,
 } = require('./db/models');
 
 const app = express();
