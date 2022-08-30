@@ -14,7 +14,7 @@ function Registration({ setAuthState }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const response = await fetch('/api/auth/registration', {
+    const response = await fetch('http://localhost:3002/registration', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

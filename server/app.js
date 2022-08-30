@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -7,7 +8,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const bcrypt = require('bcrypt');
 const {
-  Users, Restoraunt, Sequelize,
+  User, Sequelize,
 } = require('./db/models');
 
 const app = express();
@@ -39,7 +40,7 @@ app.use(session(sessionConfig));
 
 app.get('/auth', async (req, res) => {
   try {
-    const result = await Users.findByPk(req.session.userId);
+    const result = await User.findByPk(req.session.userId);
     res.json(result);
   } catch (error) {
     res.json(error);
@@ -52,7 +53,7 @@ app.post('/auth', async (req, res) => {
 
     console.log({ userName, email, password });
 
-    const user = await Users.findOne({
+    const user = await User.findOne({
       where: {
         [Sequelize.Op.or]: [{ name: userName }, { email }],
       },
@@ -66,7 +67,7 @@ app.post('/auth', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await Users.create(
+    const newUser = await User.create(
       { email, password: hashedPassword, name: userName },
     );
 
@@ -93,39 +94,44 @@ app.get('/logout', async (req, res) => {
 });
 
 app.post('/registration', async (req, res) => {
+  const { name, email, password } = req.body;
+  const hashPassword = await bcrypt.hash(password, 10);
   try {
-    const { email, password, name } = req.body;
-
-    const result = await Users.create({ email, password: await bcrypt.hash(password), name });
-    if (result.id) {
-      req.session.userName = result.name;
-      req.session.userId = result.id;
-      return res.json(result);
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      const newUser = await User.create({ name, email, password: hashPassword });
+      req.session.userSession = { email: newUser.email };
+      return res.json({ email: newUser.email, name: newUser.name });
     }
-    throw Error(result);
-  } catch (error) {
-    return res.json(error);
+    res.status(400).json({ message: 'Такой email уже занят' });
+  } catch (err) {
+    console.error(err);
   }
 });
+
+// авторизация
 
 app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
-    const result = await Users.findOne({ where: { email } });
-    if (await bcrypt.compare(password, result.password)) {
-      req.session.userName = result.name;
-      req.session.userId = result.id;
-      return res.json(result);
+    const user = await User.findOne({ where: { email } });
+    if (user) {
+      const checkPass = await bcrypt.compare(password, user.password);
+      if (checkPass) {
+        req.session.userSession = { email: user.email };
+        return res.json({ email: user.email, name: user.name });
+      }
     }
-    throw Error(result);
-  } catch (error) {
-    return res.json(error);
+    res.status(400).json({ message: 'Email или пароль не верны' });
+  } catch (err) {
+    console.error(err);
   }
 });
 
-app.get('/users', async (req, res) => {
-  const users = await Users.findAll();
-  res.json(users);
+app.get('/logout', async (req, res) => {
+  res.clearCookie('user_sid'); // Удалить куку
+  req.session.destroy(); // Завершить сессию
+  res.sendStatus(200);
 });
 
 app.listen(process.env.PORT, () => {
