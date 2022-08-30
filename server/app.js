@@ -93,6 +93,8 @@ app.get('/logout', async (req, res) => {
   }
 });
 
+// регистрация
+
 app.post('/registration', async (req, res) => {
   const { name, email, password } = req.body;
   const hashPassword = await bcrypt.hash(password, 10);

@@ -14,7 +14,7 @@ function Login({ setAuthState }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch('http://localhost:3002/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

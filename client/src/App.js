@@ -11,7 +11,14 @@ function App({ userSession }) {
 
   return (
     <div className="App">
-      <Navbar />
+      <div>
+        <p>
+          Привет,
+          {' '}
+          {authState ? `${authState.email}` : 'гость'}
+        </p>
+      </div>
+      <Navbar authState={authState} setAuthState={setAuthState} />
       <Routes>
         <Route path="/" element={<MainPage authState={authState} />} />
         <Route path="/registration" element={<Registration setAuthState={setAuthState} />} />

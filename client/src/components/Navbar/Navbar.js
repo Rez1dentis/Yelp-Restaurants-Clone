@@ -5,7 +5,7 @@ function Navbar({ authState, setAuthState }) {
   const navigate = useNavigate();
   const logoutHandler = async (e) => {
     e.preventDefault();
-    const response = await fetch('/api/auth/logout');
+    const response = await fetch('/logout');
     if (response.ok) {
       setAuthState(null);
       navigate('/');
@@ -33,7 +33,7 @@ function Navbar({ authState, setAuthState }) {
                 ) : (
                   <>
                     <li className="nav-item">
-                      <NavLink to="/animals" className="nav-link active" aria-current="page">Yelp</NavLink>
+                      <NavLink to="/" className="nav-link active" aria-current="page">Yelp</NavLink>
                     </li>
                     <li className="nav-item">
                       <a onClick={logoutHandler} className="nav-link" href="">Выход</a>
