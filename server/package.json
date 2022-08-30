@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "webpack": "webpack -wd eval-source-map",
-    "dev": "babel-node src/server.js"
+    "start":"node app.js"
   },
   "keywords": [],
   "author": "",
