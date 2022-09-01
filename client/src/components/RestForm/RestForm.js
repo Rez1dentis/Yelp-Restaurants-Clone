@@ -37,9 +37,11 @@ export default function RestForm() {
     getRestaraunts();
   }, []);
 
+  const newState = state.filter((el) => el.name !== undefined);
+
   return (
     <div className="rest-list">
-      {state.map((el) => (
+      {newState.map((el) => (
         <div className="card-content">
           <div className="card">
             <img src={el.photo} className="card-img-top" alt="..." />
