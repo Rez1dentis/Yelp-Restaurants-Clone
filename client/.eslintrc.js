@@ -18,6 +18,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    'max-len': 0,
     'jsx-a11y/alt-text': 0,
     'react/button-has-type': 0,
     'react/jsx-filename-extension': 0,

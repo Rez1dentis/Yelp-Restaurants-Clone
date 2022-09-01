@@ -52,3 +52,13 @@ form {
   width: 50%;
   margin: auto;
 }
+
+.rest-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-text {
+  overflow: scroll;
+  height: 150px;
+}
