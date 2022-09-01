@@ -1,14 +1,10 @@
 import React from 'react';
-import RestList from '../RestList/RestList';
-import Search from '../Search/Search';
-import SideBar from '../SideBar/SideBar';
+import RestForm from '../RestForm/RestForm';
 
-function MainPage(props) {
+function MainPage() {
   return (
     <div>
-      {/* <SideBar /> */}
-      <Search />
-      <RestList />
+      <RestForm />
     </div>
   );
 }

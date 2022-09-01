@@ -12,3 +12,43 @@ code {
     monospace;
 }
 
+.sidebar{
+  display: flex;
+}
+
+.search {
+  display: flex;
+  margin: auto;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.068), 0 10px 10px rgba(0, 0, 0, 0.034);
+}
+
+.card-content {
+  width: 300px;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 10px;
+  margin: 40px 20px;
+  background-color: white;
+  color: black;
+ box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.product-img {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  object-fit: cover;  
+  margin-left: auto;
+  margin-right: auto; 
+  border-radius: 5px;
+}
+
+.search-input {
+  height: 35px;
+  width: 400px;
+}
+
+form {
+  width: 50%;
+  margin: auto;
+}

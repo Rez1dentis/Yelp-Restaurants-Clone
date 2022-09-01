@@ -5,6 +5,8 @@ import Login from './components/Login/Login';
 import MainPage from './components/MainPage/MainPage';
 import Navbar from './components/Navbar/Navbar';
 import Registration from './components/Registration/Registration';
+import Search from './components/Search/Search';
+import SideBar from './components/SideBar/SideBar';
 
 function App({ userSession }) {
   const [authState, setAuthState] = useState(userSession || null);
@@ -19,6 +21,12 @@ function App({ userSession }) {
         </p>
       </div>
       <Navbar authState={authState} setAuthState={setAuthState} />
+      <div className="sidebar">
+        <SideBar />
+        <div className="search">
+          <Search />
+        </div>
+      </div>
       <Routes>
         <Route path="/" element={<MainPage authState={authState} />} />
         <Route path="/registration" element={<Registration setAuthState={setAuthState} />} />
